@@ -1,0 +1,45 @@
+<app-header></app-header>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="jumbotron" style="background: #daffd4; margin-top: 8px">
+      <h1 class="display-4">New Book</h1>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="Name"><i class="fas fa-book"></i> Name</label>
+          <input type="text" class="form-control" id="Name"  placeholder="Enter nane" name="name" [(ngModel)]="name">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="Author"><i class="fas fa-pen-nib"></i> Author</label>
+          <input type="text" class="form-control" id="Author"  placeholder="Enter author" name="author" [(ngModel)]="author">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="Category"><i class="fas fa-search"></i> Category</label>
+          <input type="text" class="form-control" id="Category"  placeholder="Search Category" name="category" [(ngModel)]="category">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="Published"><i class="fas fa-person-booth"></i> Published Date</label>
+          <input type="date" class="form-control" id="Published"   name="name" [(ngModel)]="publishedDate">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <button type="button" class="btn btn-success" (click)="createBook()"><i class="fas fa-plus"></i> Create book</button>
+      </div>
+    </div>
+
+
+
+
+
+  </div>
+</div>
