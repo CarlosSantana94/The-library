@@ -1,1 +1,84 @@
 <app-header></app-header>
+
+<div class="row margentop">
+  <div class="col-md-12">
+    <table class="table">
+      <thead class="thead-light">
+      <tr>
+        <th scope="col" style="display: none">ID</th>
+        <th scope="col">Manufacturer</th>
+        <th scope="col">Author</th>
+        <th scope="col">Category</th>
+        <th scope="col">Published Date</th>
+        <th scope="col">Available</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let books of allBooks">
+        <td style="display: none">{{books['id']}}</td>
+        <td>{{books['name']}}</td>
+        <td>{{books['author']}}</td>
+        <td>{{books['category_id']}}</td>
+        <td>{{books['published_date']}}</td>
+        <td>
+          <div class="modal-body" *ngIf="books.available"> <i style="color: forestgreen" class="fas fa-check-circle"></i></div>
+          <div class="modal-body" *ngIf="!books.available"> <i style="color: darkred" class="fas fa-times-circle"></i></div>
+        </td>
+        <td>
+          <button type="button" class="btn btn-primary"
+                  data-toggle="modal" data-target="#modal"
+                  (click)="changeAvailability(books['id'],books['name'],books['available'])">
+            Preview
+          </button>
+        </td>
+        <td>
+
+          <button type="button" class="btn btn-primary margen" (click)="editBook(books['id']);"><a><i
+            class="fas fa-pencil-alt"></i></a>
+          </button>
+
+          <button type="button" class="btn btn-primary margen" (click)="deleteBook(books['id'],books['name']);"><a><i
+            class="fas fa-trash-alt"></i></a>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Change Availability: {{nameToChangeStatus}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div *ngIf="available" class="col-md-12">
+              <button type="button" class="btn btn-success btn-lg btn-block" (click)="changeStatus()">Rent Book</button>
+            </div>
+            <div *ngIf="!available" class="col-md-12">
+              <button type="button" class="btn btn-secondary btn-lg btn-block" (click)="changeStatus()">Return Book</button>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+

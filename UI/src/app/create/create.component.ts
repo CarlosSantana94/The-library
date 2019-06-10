@@ -28,9 +28,8 @@ export class CreateComponent implements OnInit {
       'published_date': this.publishedDate,
       'user': '-',
       'available': true,
-
     };
-    alert(this.dataSend)
+
     this.petition.addBook(this.dataSend).subscribe(data => {
       console.log(data);
     });

@@ -22,13 +22,19 @@ export class PetitionsService {
   }
 
   addBook(data: any): Observable<any[]> {
-
-    console.log(data);
     // @ts-ignore
     return this.http.post<any[]>(this.path + 'books', data, this.httpOptions);
   }
 
   getAllBooks(): Observable<any[]> {
     return this.http.get<any[]>(this.path + 'books');
+  }
+
+  deleteBookById(id: any): Observable<any[]> {
+    return this.http.delete<any[]>(this.path + 'books/' + id);
+  }
+
+  changeAvailability(id: any): Observable<any[]> {
+    return this.http.get<any[]>(this.path + 'books/available/' + id, this.httpOptions);
   }
 }
