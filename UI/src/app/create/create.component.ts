@@ -12,6 +12,7 @@ export class CreateComponent implements OnInit {
   author: any;
   category: any;
   publishedDate: any;
+  dataSend: any;
 
   constructor(private petition: PetitionsService) {
   }
@@ -20,7 +21,17 @@ export class CreateComponent implements OnInit {
   }
 
   createBook() {
-    this.petition.addBook(this.name, this.author, this.category, this.publishedDate).subscribe(data =>{
+    this.dataSend = {
+      'name': this.name,
+      'author': this.author,
+      'category_id': this.category,
+      'published_date': this.publishedDate,
+      'user': '-',
+      'available': true,
+
+    };
+    alert(this.dataSend)
+    this.petition.addBook(this.dataSend).subscribe(data => {
       console.log(data);
     });
   }

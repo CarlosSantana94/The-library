@@ -9,7 +9,7 @@ import {Observable} from 'rxjs';
 })
 export class PetitionsService {
 
-  path = 'http://localhost:8080/library/API/public/';
+  path = 'http://127.0.0.1:8000/api/';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -21,10 +21,14 @@ export class PetitionsService {
   constructor(private http: HttpClient) {
   }
 
-  addBook(name: string, author: string, category: string, publish_date: string): Observable<any> {
-    const book = new Book(name, author, category, publish_date);
-    console.log(book);
+  addBook(data: any): Observable<any[]> {
+
+    console.log(data);
     // @ts-ignore
-    return this.http.post<any>(this.path + 'add', book, this.httpOptions);
+    return this.http.post<any[]>(this.path + 'books', data, this.httpOptions);
+  }
+
+  getAllBooks(): Observable<any[]> {
+    return this.http.get<any[]>(this.path + 'books');
   }
 }
