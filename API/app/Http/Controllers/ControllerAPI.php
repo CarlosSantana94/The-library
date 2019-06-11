@@ -9,7 +9,7 @@ class ControllerAPI extends Controller
 {
     public function getAllBooks()
     {
-        return Book::all();
+        return Book::paginate(7);
     }
 
     public function addBook(Request $request)
@@ -36,16 +36,29 @@ class ControllerAPI extends Controller
         return $book;
     }
 
-    public function changeAvailability($id)
+    public function changeAvailability($id,$user)
     {
         $book = $this->getBookById($id);
         if ($book->available){
             $book->available = false;
+            $book->user = $user;
         }else{
             $book->available = true;
+            $book->user = '-';
         }
         $book->save();
         return $this->getBookById($id);
+    }
+
+    public function findBook($searchTerm){
+        return Book::where('name','LIKE','%'.$searchTerm.'%')
+            ->orWhere('author','LIKE','%'.$searchTerm.'%')
+            ->orWhere('category','LIKE','%'.$searchTerm.'%')
+            ->orWhere('published_date','LIKE','%'.$searchTerm.'%')
+            ->orderBy('name')
+            ->paginate(7);
+
+
     }
 
 

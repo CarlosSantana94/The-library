@@ -3,3 +3,11 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.margin{
+  margin: 4px 4px;
+}
+
+.margin-top{
+  margin-top: 4px;
+}

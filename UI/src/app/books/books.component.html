@@ -1,45 +1,61 @@
 <app-header></app-header>
 
-<div class="row margentop">
+<div class="row margin-top">
+  <div class="col-md-12">
+    <div class="form-group">
+      <label for="searchBook"><i class="fas fa-search"></i> Search</label>
+      <input type="text" class="form-control" id="searchBook" placeholder="" [(ngModel)]="keyword" name="keyword"
+             (input)="search(keyword)">
+    </div>
+  </div>
+</div>
+
+
+<div class="row margin-top">
   <div class="col-md-12">
     <table class="table">
       <thead class="thead-light">
       <tr>
         <th scope="col" style="display: none">ID</th>
-        <th scope="col">Manufacturer</th>
+        <th scope="col">Name</th>
         <th scope="col">Author</th>
         <th scope="col">Category</th>
         <th scope="col">Published Date</th>
         <th scope="col">Available</th>
+        <th scope="col">User</th>
         <th scope="col"></th>
         <th scope="col"></th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let books of allBooks">
+      <tr *ngFor="let books of allBooks['data']">
         <td style="display: none">{{books['id']}}</td>
         <td>{{books['name']}}</td>
         <td>{{books['author']}}</td>
-        <td>{{books['category_id']}}</td>
+        <td>{{books['category']}}</td>
         <td>{{books['published_date']}}</td>
+
         <td>
-          <div class="modal-body" *ngIf="books.available"> <i style="color: forestgreen" class="fas fa-check-circle"></i></div>
-          <div class="modal-body" *ngIf="!books.available"> <i style="color: darkred" class="fas fa-times-circle"></i></div>
+          <div class="margin" *ngIf="books['available']"><i style="color: forestgreen" class="fas fa-check-circle"></i>
+          </div>
+          <div class="margin" *ngIf="!books['available']"><i style="color: darkred" class="fas fa-times-circle"></i>
+          </div>
         </td>
+        <td>{{books['user']}}</td>
         <td>
-          <button type="button" class="btn btn-primary"
+          <button type="button" class="btn btn-light margin"
                   data-toggle="modal" data-target="#modal"
-                  (click)="changeAvailability(books['id'],books['name'],books['available'])">
-            Preview
+                  (click)="changeAvailability(books['id'], books['name'], books['available'],books['user'])">
+            <i class="fas fa-sync-alt"></i> Change Status
           </button>
         </td>
         <td>
 
-          <button type="button" class="btn btn-primary margen" (click)="editBook(books['id']);"><a><i
+          <button type="button" class="btn btn-info margin" (click)="editBook(books['id']);"><a><i
             class="fas fa-pencil-alt"></i></a>
           </button>
 
-          <button type="button" class="btn btn-primary margen" (click)="deleteBook(books['id'],books['name']);"><a><i
+          <button type="button" class="btn btn-danger margin" (click)="deleteBook(books['id'],books['name']);"><a><i
             class="fas fa-trash-alt"></i></a>
           </button>
         </td>
@@ -49,6 +65,44 @@
   </div>
 </div>
 
+
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <nav aria-label="...">
+      <ul class="pagination">
+
+
+        <li class="page-item disabled" *ngIf="allBooks.prev_page_url==null">
+          <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i> Previous</a>
+        </li>
+        <li class="page-item " *ngIf="allBooks.prev_page_url!=null">
+          <a class="page-link" (click)="prevPage()" tabindex="-1" style="color: green"><i
+            class="fas fa-chevron-left"></i> Previous</a>
+        </li>
+
+
+        <li class="page-item" *ngFor="let page of pagination">
+          <a class="page-link" (click)=" goToPage(page)" style="color: dodgerblue; background: aliceblue"
+             *ngIf="currentPage==page">
+            {{page}}
+          </a>
+          <a class="page-link" (click)=" goToPage(page)" style="color: dodgerblue" *ngIf="currentPage!=page">
+            {{page}}
+          </a>
+        </li>
+
+        <li class="page-item disabled" *ngIf="allBooks.next_page_url==null">
+          <a class="page-link">Next <i class="fas fa-chevron-right"></i></a>
+        </li>
+        <li class="page-item" *ngIf="allBooks.next_page_url!=null" style="color: green">
+          <a class="page-link" (click)="nextpage()">Next <i class="fas fa-chevron-right"></i></a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="col-md-4"></div>
+</div>
 <!-- Modal -->
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
@@ -62,12 +116,35 @@
       </div>
       <div class="modal-body">
         <div class="container">
+
           <div class="row">
             <div *ngIf="available" class="col-md-12">
-              <button type="button" class="btn btn-success btn-lg btn-block" (click)="changeStatus()">Rent Book</button>
+              <div class="row margin-top">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="userModal"><i class="fas fa-search"></i> Rent to: {{user}}</label>
+                    <input type="text" class="form-control" id="userModal" placeholder="" [(ngModel)]="user"
+                           name="user">
+                  </div>
+                </div>
+              </div>
+              <button *ngIf="user!==''" type="button" class="btn btn-success btn-lg btn-block" (click)="changeStatus(user)"
+                      data-dismiss="modal">Rent Book
+              </button>
             </div>
             <div *ngIf="!available" class="col-md-12">
-              <button type="button" class="btn btn-secondary btn-lg btn-block" (click)="changeStatus()">Return Book</button>
+              <div class="row margin-top">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="userModal2"><i class="fas fa-search"></i> Receive book from:</label>
+                    <input type="text" class="form-control" id="userModal2" disabled placeholder=""
+                           [(ngModel)]="userRent" name="user">
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary btn-lg btn-block" (click)="changeStatus(userRent)"
+                      data-dismiss="modal">Return Book
+              </button>
             </div>
           </div>
         </div>
@@ -76,9 +153,11 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+
       </div>
     </div>
   </div>
 </div>
+
+
 

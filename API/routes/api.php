@@ -22,4 +22,5 @@ Route::post('books','ControllerAPI@addBook')->name('addBook');
 Route::get('books/{id}','ControllerAPI@getBookById')->name('getBookById');
 Route::put('books/{id}','ControllerAPI@editBookById')->name('editBookById');
 Route::delete('books/{id}','ControllerAPI@deleteBookById')->name('deleteBookById');
-Route::get('books/available/{id}','ControllerAPI@changeAvailability')->name('changeAvailability');
+Route::get('books/available/{id}/{user}','ControllerAPI@changeAvailability')->name('changeAvailability');
+Route::get('books/search/{searchTerm}','ControllerAPI@findBook')->name('findBook');
