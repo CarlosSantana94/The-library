@@ -48,6 +48,7 @@ export interface BookData {
   'category': number;
   'published_date': string;
   'user': string;
+  'category_name': string;
   'available': number;
   'created_at': string;
   'updated_at': string;

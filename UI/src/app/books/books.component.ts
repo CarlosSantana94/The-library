@@ -22,7 +22,7 @@ export class BooksComponent implements OnInit {
   dataSend: any;
   pagination = [];
   currentPage: number;
-  keyword: any;
+  keyword = '';
   user: any;
   userRent: any;
 
@@ -33,10 +33,11 @@ export class BooksComponent implements OnInit {
 
   ngOnInit() {
     this.getAllBooks(1);
+    this.keyword = '';
   }
 
   editBook(book: any) {
-    this.router.navigate(['edit'], { queryParams: { idb: book } });
+    this.router.navigate(['edit'], {queryParams: {idb: book}});
 
   }
 
@@ -94,15 +95,15 @@ export class BooksComponent implements OnInit {
     });
   }
 
-  private search(keyword: string) {
+   search(keyword: string) {
     if (keyword === '') {
       this.getAllBooks(1);
     } else {
-      this.petitions.searchTerm(keyword).subscribe(data => {
+      this.petitions.searchTerm(keyword).subscribe(data1 => {
 
         this.currentPage = 1;
         this.allBooks = {} as Books;
-        this.allBooks = data;
+        this.allBooks = data1;
         this.pagination = [];
 
         for (let i = 1; i <= this.allBooks.last_page; i++) {
@@ -123,6 +124,7 @@ export interface BookData {
   'category': number;
   'published_date': string;
   'user': string;
+  'category_name': string;
   'available': number;
   'created_at': string;
   'updated_at': string;

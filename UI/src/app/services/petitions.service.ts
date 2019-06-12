@@ -21,6 +21,8 @@ export class PetitionsService {
   constructor(private http: HttpClient) {
   }
 
+  // BOOKS PROVIDERS API
+
   addBook(data: any): Observable<any[]> {
     // @ts-ignore
     return this.http.post<any[]>(this.path + 'books', data, this.httpOptions);
@@ -50,8 +52,29 @@ export class PetitionsService {
   editBookById(id: any, dataEdit: BookData): Observable<BookData> {
     return this.http.put<BookData>(this.path + 'books/' + id, dataEdit, this.httpOptions);
   }
+
+  // CATEGORY PROVIDER API
+
+  addCategory(data: Category): Observable<Category[]> {
+    // @ts-ignore
+    return this.http.post<Category[]>(this.path + 'category', data, this.httpOptions);
+  }
+
+  getAllCategories(): Observable<Category> {
+    return this.http.get<Category>(this.path + 'category');
+  }
+
 }
 
+
+export interface Category {
+  'id': number;
+  'name': string;
+  'description': string;
+  'books_ids': string;
+  'created_at': string;
+  'updated_at': string;
+}
 
 export interface BookData {
   'id': number;
@@ -60,6 +83,7 @@ export interface BookData {
   'category': number;
   'published_date': string;
   'user': string;
+  'category_name': string;
   'available': number;
   'created_at': string;
   'updated_at': string;

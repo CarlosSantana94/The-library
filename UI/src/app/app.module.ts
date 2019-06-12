@@ -12,6 +12,7 @@ import {CreateComponent} from './create/create.component';
 import {FormsModule} from '@angular/forms';
 import {DataTablesModule} from 'angular-datatables';
 import {FlxUiDataTable, FlxUiDatatableModule} from 'flx-ui-datatable';
+import { CategoryFilterPipe } from './tableFilters/category-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {FlxUiDataTable, FlxUiDatatableModule} from 'flx-ui-datatable';
     HeaderComponent,
     BooksComponent,
     EditComponent,
-    CreateComponent
+    CreateComponent,
+    CategoryFilterPipe
   ],
   imports: [
     BrowserModule,

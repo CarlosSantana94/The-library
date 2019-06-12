@@ -3,7 +3,10 @@
 <div class="row">
   <div class="col-md-12">
     <div class="jumbotron" style="background: #daffd4; margin-top: 8px">
-      <h1 class="display-4">New Book</h1>
+      <h1 class="display-4">New Book: {{name}}</h1>
+      <h4 *ngIf="author!==''">Author: {{author}}</h4>
+      <h4 *ngIf="nameCategory!==''">Category: {{nameCategory}}</h4>
+      <h4 *ngIf="publishedDate!==''">Published date: {{publishedDate}}</h4>
     </div>
   </div>
   <div class="col-md-12">
@@ -11,35 +14,135 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="Name"><i class="fas fa-book"></i> Name</label>
-          <input type="text" class="form-control" id="Name"  placeholder="Enter name" name="name" [(ngModel)]="name">
+          <input type="text" class="form-control" id="Name" placeholder="Enter name" name="name" [(ngModel)]="name">
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <label for="Author"><i class="fas fa-pen-nib"></i> Author</label>
-          <input type="text" class="form-control" id="Author"  placeholder="Enter author" name="author" [(ngModel)]="author">
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="Category"><i class="fas fa-search"></i> Category</label>
-          <input type="text" class="form-control" id="Category"  placeholder="Search Category" name="category" [(ngModel)]="category">
+          <input type="text" class="form-control" id="Author" placeholder="Enter author" name="author"
+                 [(ngModel)]="author">
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <label for="Published"><i class="fas fa-person-booth"></i> Published Date</label>
-          <input type="date" class="form-control" id="Published"   name="name" [(ngModel)]="publishedDate">
+          <input type="date" class="form-control" id="Published" name="name" [(ngModel)]="publishedDate">
         </div>
       </div>
       <div class="col-md-6">
-        <button type="button" class="btn btn-success" (click)="createBook()"><i class="fas fa-plus"></i> Create book</button>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="Category"><i class="fas fa-search"></i>Search Category</label>
+              <input type="text" class="form-control" id="Category" placeholder="Search Category" name="category"
+                     [(ngModel)]="categorySearch">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <button type="button" class="btn btn-light" data-toggle="modal" data-target="#modal"><i
+              class="fas fa-plus"></i> Add Category
+            </button>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <table class="table">
+                <thead class="thead-dark">
+                <th>Select Category</th>
+                <th></th>
+                </thead>
+                <tbody>
+                <tr *ngFor="let category of allCategories | categoryFilter:categorySearch;">
+                  <td *ngIf="category.name===nameCategory " style="color: cornflowerblue">
+                    {{category.name}}
+                  </td>
+                  <td *ngIf="category.name!==nameCategory ">
+                    {{category.name}}
+                  </td>
+
+                  <td>
+
+                    <button type="button" class="btn btn-secondary btn-sm" *ngIf="category.name!==nameCategory "
+                            (click)="selectCategoryName(category.name, category.id)">Select
+                    </button>
+                  </td>
+                </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+
+        </div>
+
       </div>
+
+
     </div>
 
 
+  </div>
 
 
 
+    <div class="col-md-12" style="margin-top: 32px" *ngIf="name !== '' && author !== '' && idCategory !== 0 && dateSendingToServer !== ''">
+      <button type="button" class="btn btn-success btn-lg btn-block" (click)="createBook()"><i class="fas fa-plus"></i>
+        Create book
+      </button>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row margin-top">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="nameCategory"><i class="far fa-bookmark"></i> Category Name</label>
+                    <input type="text" class="form-control" id="nameCategory" placeholder=""
+                           [(ngModel)]="nameCategoryModal"
+                           name="user">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="descriptionCategory"><i class="far fa-comment"></i> Description</label>
+                    <input type="text" class="form-control" id="descriptionCategory" placeholder=""
+                           [(ngModel)]="descriptionCategory"
+                           name="user">
+                  </div>
+                </div>
+              </div>
+              <button *ngIf="nameCategoryModal!==''" type="button" class="btn btn-success btn-lg btn-block"
+                      (click)="addCategory()"
+                      data-dismiss="modal">Add Category
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
   </div>
 </div>

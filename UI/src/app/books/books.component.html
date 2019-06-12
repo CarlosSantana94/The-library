@@ -32,7 +32,7 @@
         <td style="display: none">{{books['id']}}</td>
         <td>{{books['name']}}</td>
         <td>{{books['author']}}</td>
-        <td>{{books['category']}}</td>
+        <td>{{books['category_name']}}</td>
         <td>{{books['published_date']}}</td>
 
         <td>
@@ -122,7 +122,7 @@
               <div class="row margin-top">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="userModal"><i class="fas fa-search"></i> Rent to: {{user}}</label>
+                    <label for="userModal"><i class="far fa-address-card"></i> Rent to: {{user}}</label>
                     <input type="text" class="form-control" id="userModal" placeholder="" [(ngModel)]="user"
                            name="user">
                   </div>
@@ -136,7 +136,7 @@
               <div class="row margin-top">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="userModal2"><i class="fas fa-search"></i> Receive book from:</label>
+                    <label for="userModal2"><i class="far fa-address-card"></i> Receive book from:</label>
                     <input type="text" class="form-control" id="userModal2" disabled placeholder=""
                            [(ngModel)]="userRent" name="user">
                   </div>
@@ -158,6 +158,5 @@
     </div>
   </div>
 </div>
-
 
 
