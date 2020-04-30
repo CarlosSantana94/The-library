@@ -27,7 +27,7 @@
     "datatables.net-dt": "^1.10.19",
     "flx-ui-datatable": "^1.1.5",
     "font-awesome": "^4.7.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "ngx-perfect-scrollbar": "^8.0.0",
     "npm": "^6.9.0",
     "rxjs": "~6.3.3",
